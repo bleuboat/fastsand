@@ -1,6 +1,7 @@
 mod wiki;
 
 use axum::{extract::Path, response::Html, routing::get, Router};
+use dotenvy::dotenv;
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
 use wiki::Wiki;
@@ -20,6 +21,8 @@ async fn page(Path(path): Path<String>) -> Html<String> {
 
 #[tokio::main]
 async fn main() {
+    dotenv().ok();
+
     let mut app = Router::new();
     app = app.route("/", get(start));
     app = app.route("/{*path}", get(page));
