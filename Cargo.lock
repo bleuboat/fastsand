@@ -98,7 +98,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "fast-sandbox"
+name = "fastsand"
 version = "0.1.0"
 dependencies = [
  "axum",

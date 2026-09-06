@@ -11,8 +11,7 @@ async fn get_html(path: String) -> Html<String> {
 }
 
 async fn start() -> Html<String> {
-    let url = "start";
-    get_html(url.to_owned()).await
+    get_html("start".to_owned()).await
 }
 
 async fn page(Path(path): Path<String>) -> Html<String> {
@@ -26,7 +25,7 @@ async fn main() {
     app = app.route("/{*path}", get(page));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    println!("正在运行：http://{}", addr);
+    println!("正在运行：http://localhost:3000");
     println!("按 Ctrl+C 退出");
 
     let listener = TcpListener::bind(addr).await.unwrap();
