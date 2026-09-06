@@ -1,6 +1,8 @@
 mod wiki;
 
 use axum::{extract::Path, response::Html, routing::get, Router};
+use std::net::SocketAddr;
+use tokio::net::TcpListener;
 use wiki::Wiki;
 
 async fn get_html(path: String) -> Html<String> {
@@ -23,6 +25,10 @@ async fn main() {
     app = app.route("/", get(start));
     app = app.route("/{*path}", get(page));
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    println!("正在运行：http://{}", addr);
+    println!("按 Ctrl+C 退出");
+
+    let listener = TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
